@@ -37,7 +37,7 @@ export const createBooks = async (req, res) => {
 
     const book = await Book.create(req.body);
 
-    res.status(201).json(Books);
+    res.status(201).json(book);
     } catch (error) {
     console.error(error);
     res.status(500).json({ msg: "Error al crear el libro." });
@@ -64,7 +64,7 @@ export const deleteBooks = async (req, res) =>{
     try {
         const {id} = req.params;
 
-        const deletedBooks = await Books.findByIdandDelete(id);
+        const deletedBooks = await Book.findByIdandDelete(id);
 
         if (!deletedBooks) {
             return res.status(404).json({msg: "Libro no encontrado."});
