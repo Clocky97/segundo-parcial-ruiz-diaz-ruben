@@ -1,22 +1,22 @@
-import { Book } from "../models/book.model.js";
+import { Books } from "../models/book.model.js";
 
-export const getBook = async (req, res) =>{
+export const getBooks = async (req, res) =>{
     const id = res.params.id();
-    const book = await Book.findByPk(id);
-    if (!book){
+    const books = await Books.findByPk(id);
+    if (!books){
         console.log("No se encontró un libro con esa ID.");
     }
-    res.json(book);
+    res.json(books);
 };
 
 export const getAllBooks = async (req, res) => {
-    const book = await Book.findAll();
-    res.json(book);
+    const books = await Books.findAll();
+    res.json(books);
 };
 
 export const createBooks = async (req, res) => {
     const {title, author, pages, genre, description} = req.body;
-    if (title === "" || author === "" || pages === "" || genre === "" || description === "") {
+    if (title === "" || author === "" || pages === "" || genre === "") {
         return res.json({
             msg: "Hay campos vacíos",
         });
@@ -28,16 +28,16 @@ export const createBooks = async (req, res) => {
     }
 
   try {
-    const existing = await Book.findOne({ where: { title } });
+    const existing = await Books.findOne({ where: { title } });
 
     if (existing) {
       return res.status(400).json({ msg: "Ese titulo ya está en uso." });
     }
 
 
-    const book = await Book.create(req.body);
+    const books = await Books.create(req.body);
 
-    res.status(201).json(book);
+    res.status(201).json(books);
     } catch (error) {
     console.error(error);
     res.status(500).json({ msg: "Error al crear el libro." });
@@ -48,7 +48,7 @@ export const updateBooks = async (req, res) =>{
         const {id} = req.params;
         const updates = req.body;
 
-        const updatedBooks = await Book.findByIdAndUpdate(id, updates);
+        const updatedBooks = await Books.findByIdAndUpdate(id, updates);
 
         if (!updatedBooks) {
             return res.status(404).json({msg: "Libro no encontrado."});
@@ -64,7 +64,7 @@ export const deleteBooks = async (req, res) =>{
     try {
         const {id} = req.params;
 
-        const deletedBooks = await Book.findByIdandDelete(id);
+        const deletedBooks = await Books.findByIdandDelete(id);
 
         if (!deletedBooks) {
             return res.status(404).json({msg: "Libro no encontrado."});

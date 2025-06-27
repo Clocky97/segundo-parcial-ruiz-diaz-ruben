@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-    getBook,
+    getBooks,
     getAllBooks,
     createBooks,
     updateBooks,
@@ -9,11 +9,11 @@ import {
 
 const bookRoutes = Router();
 
-bookRoutes.get("/book/id:", getBook);
-bookRoutes.put("/book/id:", updateBooks);
-bookRoutes.post("/book", createBooks);
-bookRoutes.get("/book", getAllBooks);
-bookRoutes.destroy("/book", deleteBooks);
+bookRoutes.get("/books/:id", getBooks);
+bookRoutes.put("/books/:id", updateBooks);
+bookRoutes.post("/books", createBooks);
+bookRoutes.get("/books", getAllBooks);
+bookRoutes.delete("/books", deleteBooks);
 
 export default bookRoutes;
 
